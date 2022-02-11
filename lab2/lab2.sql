@@ -25,11 +25,12 @@ CREATE TABLE films (
   PRIMARY KEY   (imdb_id)
 );
 CREATE TABLE screenings (
+  uuid          TEXT      DEFAULT (lower(hex(randomblob(16)))),
   theatre       TEXT,
   date          DATE,
   time          TIME,
   imdb_id       TEXT,
-  PRIMARY KEY   (theatre, date, time),
+  PRIMARY KEY   (uuid),
   FOREIGN KEY   (theatre) REFERENCES theatres(name),
   FOREIGN KEY   (imdb_id) REFERENCES films(imdb_id)
 );
@@ -42,13 +43,10 @@ CREATE TABLE customers (
 );
 CREATE TABLE tickets (
   uuid        TEXT                DEFAULT (lower(hex(randomblob(16)))),
-  theatre     TEXT,
-  date        DATE,
-  time        TIME,
+  screening   TEXT,
   customer    TEXT,
   PRIMARY KEY (uuid),
-  FOREIGN KEY (theatre,date,time) REFERENCES screenings(theatre,date,time),
-  FOREIGN KEY (theatre)           REFERENCES theatres(name),
+  FOREIGN KEY (screening) REFERENCES screenings(uuid),
   FOREIGN KEY (customer)          REFERENCES customers(username)
 );
 
@@ -75,11 +73,11 @@ VALUES  ('nichobi',   'Nicholas', 'Boyd Isacsson', 'password'),
         ('wildman01', 'Kyle',     'Wildman',       'password'),
         ('erma32',    'Erik',     'Gullberg',      'password'),
         ('bellsebub', 'Bella',    'Krantz',        'password');
-INSERT
-INTO    tickets (theatre, date, time, customer)
-VALUES  ('Kino',       '2022-03-12', '20:00', 'nichobi'  ),
-        ('Kino',       '2022-03-12', '20:00', 'mollorg'  ),
-        ('Filmstaden', '2022-02-26', '21:15', 'erma32'   ),
-        ('Filmstaden', '2022-02-26', '21:15', 'wildman01'),
-        ('Kino',       '2022-06-10', '15:30', 'bellsebub');
+--INSERT
+--INTO    tickets (theatre, date, time, customer)
+--VALUES  ('Kino',       '2022-03-12', '20:00', 'nichobi'  ),
+--        ('Kino',       '2022-03-12', '20:00', 'mollorg'  ),
+--        ('Filmstaden', '2022-02-26', '21:15', 'erma32'   ),
+--        ('Filmstaden', '2022-02-26', '21:15', 'wildman01'),
+--        ('Kino',       '2022-06-10', '15:30', 'bellsebub');
 

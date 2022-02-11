@@ -1,9 +1,8 @@
-
   _________      _________      _________
  | Theatre |    |Screening|    |  Film   |
  |---------|1  *|---------|*  1|---------|
- | _name_  |----| date    |----|_imdb_id_|
- | capacity|    | time    |    | title   |
+ | _name_  |----| _uuid_  |----|_imdb_id_|
+ | capacity|    |         |    | title   |
  '---------'    '---------'    | year    |
                      |1        | run_time|
                      |         '---------'
