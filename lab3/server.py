@@ -48,7 +48,7 @@ def create_user():
                 """,
                 [ user['username']
                 , user['fullName']
-                , user['pwd']
+                , hash(user['pwd'])
                 ]
             )
             username, = c.fetchone()
@@ -241,7 +241,7 @@ def get_performances():
                 WHERE   username = ? AND password = ?
                 """,
                 [ ticket['username']
-                , ticket['pwd']
+                , hash(ticket['pwd'])
                 ]
             )
             match, = c.fetchone()
@@ -302,4 +302,9 @@ def get_movie(username):
         return ''
 
 run(host='localhost', port=7007)
+
+def hash(msg):
+    import hashlib
+    return hashlib.sha256(msg.encode('utf-8')).hexdigest()
+
 db.close()
